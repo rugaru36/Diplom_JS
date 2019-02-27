@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>0.95</title>
+    <link rel="shortcut icon" href="icon.png" type="image/png">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="myStyle.css">
+    <script src="d3js.min.js"></script>
+    <!-- <script type="text/javascript" src="jquery-3.3.1.min.js"></script> -->
+    <script type="text/javascript" src="interfaceScripts.js"></script>
+    <script type="text/javascript" src="classes.js"></script>
+    <script type="text/javascript" src="mainProcess.js"></script>
+    <script type="text/javascript" src="funcs.js"></script>
+    <!--
+
+            В этой версии:
+
+            -графика
+            -форма ввода
+            -стратегия преследования
+            -безынерционные объекты
+            -стратегия убегающего
+            -инерция преследующего
+            -пропорциональный график
+            -система задания векторов (угол и длина вектора вместо координат)
+            -скорость отрисовки
+            -вывод контрольных точек
+            -толщина линий
+            -реулируемая скорость отрисовки
+            -если попал в окружность - игра закончена
+
+            -оптимизирован массив преследуемого
+            -оптимизирован интерфейс
+            -введён тестовый режим
+
+            -запилена проверка при прямом вводе
+            -проверка на пустые поля
+
+            -чекбокс для тестового режима
+
+            -вычищено говно из кода
+
+            -объекты больше не содержат массивы ВСЕХ точек, только текущие
+
+            -добавлены наследуемость и класс GameClass
+            
+    -->
+
+</head>
+
+<body>
+    <input id="hiddenOldValueBuff" style="display: none;" type="number" value=""></input>
+    <div class="row" style="width: 100%">
+        <div id="form" style="margin: 10px; border-right: 2px solid white" class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    Координата X преследующего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('Xp')">-</button></span>
+                        <input id="Xp" onfocus="setOldValue('Xp')" onchange="onChangeCheck('Xp')" 
+                            oninput="GameObject.updateData(this)"
+                            placeholder="Xp" value="8" type="number" style="text-align: center" type="number" class="form-control">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('Xp')">+</button></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    Координата Y преследующего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('Yp')">-</button></span>
+                        <input id="Yp" placeholder="Yp" onfocus="setOldValue('Yp')" onchange="onChangeCheck('Yp')" value="1" type="number" class="form-control" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('Yp')">+</button></span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    Скорость преследующего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('pursuiterVectorLength')">-</button>
+                        </span>
+                        <input id="pursuiterVectorLength" onfocus="setOldValue('pursuiterVectorLength')" onchange="onChangeCheck('pursuiterVectorLength')" placeholder="Скорость преследующего" min="1" value="5" type="number" class="form-control" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('pursuiterVectorLength')">+</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    Радиус поворота преследователя:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('pursuiterRadius')">-</button></span>
+                        <input id="pursuiterRadius" onfocus="setOldValue('pursuiterRadius')" onchange="onChangeCheck('pursuiterRadius')" placeholder="pursuiterRadius" min="0.5" value="1.5" max="5" type="number" class="form-control" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('pursuiterRadius')">+</button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" id = "pDirectionDiv" style="display: none">
+                    <br>Направление преследующего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('pursuiterVectorDirection')">-</button>
+                        </span>
+                        <input id="pursuiterVectorDirection" onfocus="setOldValue('pursuiterVectorDirection')" 
+                        onchange="onChangeCheck('pursuiterVectorDirection')" placeholder="Скорость преследующего" value="0" type="number" 
+                        class="form-control" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('pursuiterVectorDirection')">+</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    Координата X убегающего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('Xe')">-</button></span>
+                        <input id="Xe" placeholder="Xe" value="-3" type="number" class="form-control" onfocus="setOldValue('Xe')" onchange="onChangeCheck('Xe')" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('Xe')">+</button></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    Координата Y убегающего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('Ye')">-</button></span>
+                        <input id="Ye" placeholder="Ye" value="2" type="number" class="form-control" onfocus="setOldValue('Ye')" onchange="onChangeCheck('Ye')" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('Ye')">+</button></span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    Скорость убегающего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('escaperVectorLength')">-</button>
+                        </span>
+                        <input id="escaperVectorLength" placeholder="Скорость преследующего" min="1" value="2" type="number" class="form-control" onchange="onChangeCheck('escaperVectorLength')" style="text-align: center;" onfocus="setOldValue('escaperVectorLength')"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('escaperVectorLength')">+</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    Направление убегающего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('escaperVectorDirection')">-</button>
+                        </span>
+                        <input id="escaperVectorDirection" placeholder="Угол убегающего" value="30" type="number" class="form-control" onchange="onChangeCheck('escaperVectorDirection')" style="text-align: center;" onfocus="setOldValue('escaperVectorDirection')"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('escaperVectorDirection')">+</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" id="escaperRadiusDiv" style="display: none">
+                    <br> Радиус поворота убегающего:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('escaperRadius')">-</button></span>
+                        <input id="escaperRadius" onfocus="setOldValue('escaperRadius')" onchange="onChangeCheck('escaperRadius')" placeholder="escaperRadius" min="0.25" value="1" max="4" type="number" class="form-control" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('escaperRadius')">+</button></span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    Величина шага h:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('h')">-</button></span>
+                        <input id="h" placeholder="h" onfocus="setOldValue('h')" onchange="onChangeCheck('h')" value="0.01" min='0.01' max="0.5" type="number" class="form-control" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('h')">+</button></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    Точность:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('accuracy')">-</button></span>
+                        <input id="accuracy" onfocus="setOldValue('accuracy')" onchange="onChangeCheck('accuracy')" placeholder="accuracy" value="0.1" min="0.05" max="1" type="number" class="form-control" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('accuracy')">+</button></span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    Время (сек):
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('time')">-</button>
+                        </span>
+                        <input id="time" placeholder="time" onfocus="setOldValue('time')" onchange="onChangeCheck('time')" min="10" max="30" value="20" type="number" class="form-control" style="text-align: center;"
+                        oninput="GameObject.updateData(this)">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('time')">+</button></span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    Множитель скорости отрисовки:
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onMinus('speed')">-</button></span>
+                        <input id="speed" placeholder="Скорость" onfocus="setOldValue('speed')" onchange="onChangeCheck('speed')" min="0.1" max="10" value="1" type="number" class="form-control" style="text-align: center;">
+                        <span class="input-group-btn"><button class="btn value-control" onclick="onPlus('speed')">+</button></span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <button onclick="checkIfDataCorrect()" id="goButton" class="btn">Запуск!</button>
+        </div>
+        <div class="col-md-4" id="checksDiv" style="margin-top: 10px; margin-left: 20px">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="testModCheck"> Тестовый режим
+                </label>
+            </div>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="IsEscaperInerted" onchange="checkIsEscaperInerted(this)"> Инерция убегающего
+                </label>
+            </div>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="manualPDirection" onchange="checkPDirection(this)"> Настраиваемое направление преследователя
+                </label>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <br>
+    <br>
+    <br>
+    <div class="row" style="width: 100%">
+        <div class="col-md-10 center-block" id="graphics" style="margin-left: 5px"></div>
+        <br>
+        <br>
+        <div id="textInfo" class="col-md-2" style="margin: -20px">
+            <div id="result" class="center-block"></div>
+            <div id="infoOfPoints">
+            </div>
+        </div>
+    </div>
+    </div>
+<script>
+    var GameObject = new GameInterface(document.getElementById("h").value, 
+                                       document.getElementById("accuracy").value, 
+                                       document.getElementById('time').value);
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+        #result {
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        #graphics {
+            font: 10px sans-serif;
+            margin: 0;
+            color: red;
+        }
+
+        #outputDataDiv {
+            height: 500px;
+            overflow-y: auto;
+        }
+
+        .axis {
+            shape-rendering: crispEdges;
+        }
+
+        .x.axis line,
+        .x.axis path {
+            fill: none;
+            stroke: #000;
+        }
+
+        .y.axis line,
+        .y.axis path {
+            fill: none;
+            stroke: #000;
+        }
+
+        .rule line {
+            stroke: #bbb;
+            shape-rendering: crispEdges;
+        }
+
+        .main {
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 860px;
+            float: left;
+        }
+
+        .content {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-right: 860px;
+            padding-left: 30px;
+            box-sizing: border-box;
+        }
+
+        .content img {
+            width: 100%;
+        }
+
+        input[type='number'] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
