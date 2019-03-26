@@ -13,12 +13,12 @@ function checkIsEscaperInerted(e) {
     GameObject.updateData(e);
 }
 
-function checkPDirection(e){
-    if(e.checked){
+function checkPDirection(e) {
+    if (e.checked) {
         document.getElementById("pDirectionDiv").style.display = "block";
     }
-    else{
-        document.getElementById("pDirectionDiv").style.display = "none";   
+    else {
+        document.getElementById("pDirectionDiv").style.display = "none";
     }
     GameObject.updateData(e);
 }
@@ -65,8 +65,8 @@ function onPlus(idOfElement) {
     if (maxValueExists) max = document.getElementById(idOfElement).getAttribute("max") * 1;
 
     if (idOfElement == "pursuiterRadius" || idOfElement == "escaperRadius") sizeOfStep = 0.5;
-    else if (idOfElement == "pursuiterVectorAngle" || idOfElement == "escaperVectorDirection" 
-                                    || idOfElement == "pursuiterVectorDirection") sizeOfStep = 10;
+    else if (idOfElement == "pursuiterVectorAngle" || idOfElement == "escaperVectorDirection"
+        || idOfElement == "pursuiterVectorDirection") sizeOfStep = 10;
     else if (idOfElement == "h") sizeOfStep = 0.01;
     else if (idOfElement == "accuracy") sizeOfStep = 0.05;
     else if (idOfElement == "speed") sizeOfStep = 0.5;
@@ -104,7 +104,7 @@ function onPlus(idOfElement) {
 
     document.getElementById(idOfElement).value = result.toFixed(2);
     GameObject.updateData(document.getElementById(idOfElement));
-    
+
 }
 
 //изменение кнопкой
@@ -115,8 +115,8 @@ function onMinus(idOfElement) {
 
     if (minValueExists) min = document.getElementById(idOfElement).getAttribute("min") * 1;
 
-    if (idOfElement == "pursuiterVectorAngle" || idOfElement == "escaperVectorDirection" 
-            || idOfElement == "pursuiterVectorDirection") sizeOfStep = 10;
+    if (idOfElement == "pursuiterVectorAngle" || idOfElement == "escaperVectorDirection"
+        || idOfElement == "pursuiterVectorDirection") sizeOfStep = 10;
     else if (idOfElement == "pursuiterRadius" || idOfElement == "escaperRadius") sizeOfStep = 0.5;
     else if (idOfElement == "h") sizeOfStep = 0.01;
     else if (idOfElement == "accuracy") sizeOfStep = 0.05;
@@ -154,5 +154,5 @@ function onMinus(idOfElement) {
     }
     else document.getElementById(idOfElement).value = result.toFixed(2);
     GameObject.updateData(document.getElementById(idOfElement));
-    
+
 }

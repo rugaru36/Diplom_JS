@@ -1,7 +1,7 @@
 var GameObject;
 
 window.onload=function(){
-    GameObject = new GameInterface(
+    GameObject = new Game(
         document.getElementById("h").value, 
         document.getElementById("accuracy").value, 
         document.getElementById('time').value);
