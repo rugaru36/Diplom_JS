@@ -387,93 +387,81 @@ class GameInterface {
 
     updateData(e) {
         var value_id = e.id;
-        //alert(e);
         var value = e.value * 1;
-        if (value_id == "Xp") {
-            this.p_player.startCoordinates[0] = value;
-            return;
-        }
-        else if (value_id == "Yp") {
-            this.p_player.startCoordinates[1] = value;
-            return;
-        }
-        else if (value_id == "pursuiterVectorLength") {
-            var currentDir = radToDeg(findCorrectAngle(this.p_player.startSpeedVector));
-            this.p_player.startSpeedVector = createVector(currentDir, value);
-            return;
-        }
-        else if (value_id == "pursuiterRadius") {
-            this.p_player.radius = value;
-            this.p_player.maxAngle = modOfVector(this.p_player.startSpeedVector) / value;
-            return;
-        }
-        else if (value_id == "pursuiterVectorDirection") {
-            this.p_player.startSpeedVector = createVector(value, modOfVector(this.p_player.startSpeedVector));
-            return;
-        }
-        else if (value_id == "Xe") {
-            this.e_player.startCoordinates[0] = value;
-            return;
-        }
-        else if (value_id == "Ye") {
-            this.e_player.startCoordinates[1] = value;
-            return;
-        }
-        else if (value_id == "escaperVectorLength") {
-            var currentDir = radToDeg(findCorrectAngle(this.e_player.startSpeedVector));
-            this.e_player.startSpeedVector = createVector(currentDir, value);
-            return;
-        }
-        else if (value_id == "escaperVectorDirection") {
-            this.e_player.startSpeedVector = createVector(value, modOfVector(this.e_player.startSpeedVector));
-            return;
-        }
-        else if (value_id == "escaperRadius") {
-            this.e_player.radius = value;
-            this.e_player.maxAngle = modOfVector(this.e_player.startSpeedVector) / value;
-            return;
-        }
-        else if (value_id == "h") {
-            this.stepSize = value;
-            return;
-        }
-        else if (value_id == "h") {
-            this.stepSize = value;
-            return;
-        }
-        else if (value_id == "accuracy") {
-            this.accuracy = value;
-            return;
-        }
-        else if (value_id == "time") {
-            this.time = value;
-            return;
-        }
-        else if (value_id == "IsEscaperInerted") {
-            if (e.checked) {
-                this.e_player.radius = document.getElementById("escaperRadius").value * 1;
-                this.e_player.maxAngle = modOfVector(this.e_player.startSpeedVector) / this.e_player.radius;
-            }
-            else {
-                this.e_player.radius = 0;
-                this.e_player.maxAngle = 0;
-            }
-        }
-        else if (value_id == "manualPDirection") {
-            var pDir;
-            if (e.checked) {
-                pDir = document.getElementById("pursuiterVectorDirection").value * 1;
-                this.p_player.startSpeedVector = createVector(pDir, modOfVector(this.p_player.startSpeedVector));
-            }
-            else {
-                var lVector = [];
-                lVector[0] = this.e_player.startCoordinates[0] - this.p_player.startCoordinates[0];
-                lVector[1] = this.e_player.startCoordinates[1] - this.p_player.startCoordinates[1];
 
-                pDir = radToDeg(findCorrectAngle(lVector));
+        if(e.type == 'checkbox') value = e.checked;
 
-                this.p_player.startSpeedVector = createVector(pDir, modOfVector(this.p_player.startSpeedVector));
-            }
+        switch(value_id){
+            case "Xp":
+                this.p_player.startCoordinates[0] = value;
+                break;
+            case "Yp":
+                this.p_player.startCoordinates[1] = value;
+                break;
+            case "pursuiterVectorLength":
+                var currentDir = radToDeg(findCorrectAngle(this.p_player.startSpeedVector));
+                this.p_player.startSpeedVector = createVector(currentDir, value);
+                return;
+            case "pursuiterRadius":
+                this.p_player.radius = value;
+                this.p_player.maxAngle = modOfVector(this.p_player.startSpeedVector) / value;
+                break;
+            
+            case "pursuiterVectorDirection":
+                this.p_player.startSpeedVector = createVector(value, modOfVector(this.p_player.startSpeedVector));
+                break;
+            case "Xe":
+                this.e_player.startCoordinates[0] = value;
+                break;
+            case "Ye":
+                this.e_player.startCoordinates[1] = value;
+                return;
+            case "escaperVectorLength":
+                var currentDir = radToDeg(findCorrectAngle(this.e_player.startSpeedVector));
+                this.e_player.startSpeedVector = createVector(currentDir, value);
+                break;
+            case "escaperVectorDirection":
+                this.e_player.startSpeedVector = createVector(value, modOfVector(this.e_player.startSpeedVector));
+                break;
+            case "escaperRadius":
+                this.e_player.radius = value;
+                this.e_player.maxAngle = modOfVector(this.e_player.startSpeedVector) / value;
+                break;
+            case "h":
+                this.stepSize = value;
+                break;
+            case "accuracy":
+                this.accuracy = value;
+                break;
+            case "time":
+                this.time = value;
+                break;
+            case "IsEscaperInerted":
+                if (value) {
+                    this.e_player.radius = document.getElementById("escaperRadius").value * 1;
+                    this.e_player.maxAngle = modOfVector(this.e_player.startSpeedVector) / this.e_player.radius;
+                }
+                else {
+                    this.e_player.radius = 0;
+                    this.e_player.maxAngle = 0;
+                }
+                break;
+            case "manualPDirection":
+                var pDir;
+                if (value) {
+                    pDir = document.getElementById("pursuiterVectorDirection").value * 1;
+                    this.p_player.startSpeedVector = createVector(pDir, modOfVector(this.p_player.startSpeedVector));
+                }
+                else {
+                    var lVector = [];
+                    lVector[0] = this.e_player.startCoordinates[0] - this.p_player.startCoordinates[0];
+                    lVector[1] = this.e_player.startCoordinates[1] - this.p_player.startCoordinates[1];
+    
+                    pDir = radToDeg(findCorrectAngle(lVector));
+    
+                    this.p_player.startSpeedVector = createVector(pDir, modOfVector(this.p_player.startSpeedVector));
+                }
+            break;
         }
     }
 }
