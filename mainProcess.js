@@ -1,3 +1,13 @@
+var GameObject;
+
+window.onload=function(){
+    GameObject = new GameInterface(
+        document.getElementById("h").value, 
+        document.getElementById("accuracy").value, 
+        document.getElementById('time').value);
+}
+
+
 //основная функция
 function startSolutionProcess() {
 
@@ -340,7 +350,7 @@ function outputData(EscaperCoordinates, PursuiterCoordinates, controlData, time)
 }
 
 //корректность данных
-function checkIfDataCorrect(e) {
+function checkIfDataCorrect() {
 
     var step_is_more_than_accuracy =
         document.getElementById('accuracy').value * 1 < document.getElementById('h').value * 1;
@@ -370,3 +380,4 @@ function checkIfDataCorrect(e) {
     //всё верно, начинаем решение
     startSolutionProcess();
 }
+
