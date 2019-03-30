@@ -7,7 +7,6 @@ window.onload=function(){
         document.getElementById('time').value);
 }
 
-
 //основная функция
 function startSolutionProcess() {
 
