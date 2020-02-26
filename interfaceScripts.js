@@ -50,8 +50,9 @@ function onChangeCheck(idOfElement) {
 
 //изменение кнопкой
 function onPlus(idOfElement) {
-  var sizeOfStep
-  var maxValueExists = document.getElementById(idOfElement).hasAttribute("max")
+  let sizeOfStep
+  let maxValueExists = document.getElementById(idOfElement).hasAttribute("max")
+  let result
   max = maxValueExists ? +document.getElementById(idOfElement).getAttribute("max") : undefined
 
   if (idOfElement == "pursuiterRadius" || idOfElement == "escaperRadius") {
@@ -71,46 +72,39 @@ function onPlus(idOfElement) {
   }
   else sizeOfStep = 1
 
-  var currentValue = document.getElementById(idOfElement).value * 1
+  let currentValue = document.getElementById(idOfElement).value * 1
 
   if (maxValueExists && currentValue + sizeOfStep > max) {
     if (currentValue != max) {
       result = max
       document.getElementById(idOfElement).value = result
       GameObject.updateData(document.getElementById(idOfElement))
-      return
     }
-    else return
-  }
-
-  else {
-    var result = currentValue + sizeOfStep
+    return
+  } else {
+    result = currentValue + sizeOfStep
     if (result % sizeOfStep != 0 && (sizeOfStep == 0.5 || sizeOfStep == 10)) {
       result -= (result - sizeOfStep)
     }
   }
-
   if (sizeOfStep >= 1 && Math.abs(result - Math.round(result)) < 0.01) {
     document.getElementById(idOfElement).value = result.toFixed()
     GameObject.updateData(document.getElementById(idOfElement))
     return
-  }
-  else if (sizeOfStep == 0.5 || sizeOfStep == 0.1) {
+  } else if (sizeOfStep == 0.5 || sizeOfStep == 0.1) {
     document.getElementById(idOfElement).value = result.toFixed(1)
     GameObject.updateData(document.getElementById(idOfElement))
     return
   }
-
   document.getElementById(idOfElement).value = result.toFixed(2)
   GameObject.updateData(document.getElementById(idOfElement))
-
 }
 
 //изменение кнопкой
 function onMinus(idOfElement) {
 
-  var sizeOfStep
-  var minValueExists = document.getElementById(idOfElement).hasAttribute("min")
+  let sizeOfStep
+  let minValueExists = document.getElementById(idOfElement).hasAttribute("min")
 
   if (minValueExists) min = document.getElementById(idOfElement).getAttribute("min") * 1
 
@@ -124,7 +118,7 @@ function onMinus(idOfElement) {
   else if (idOfElement == "speed") sizeOfStep = 0.5
   else sizeOfStep = 1
 
-  var currentValue = document.getElementById(idOfElement).value * 1
+  let currentValue = document.getElementById(idOfElement).value * 1
 
   if (minValueExists && currentValue - sizeOfStep < min) {
     if (currentValue != min) {
@@ -134,7 +128,7 @@ function onMinus(idOfElement) {
     }
     return
   } else {
-    var result = currentValue - sizeOfStep
+    let result = currentValue - sizeOfStep
     if (result % sizeOfStep != 0 && (sizeOfStep == 0.5 || sizeOfStep == 10)) {
       result -= (result - sizeOfStep)
     }

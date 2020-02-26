@@ -93,14 +93,11 @@ class Pursuiter extends Player {
 }
 
 class Evader extends Player {
-
   constructor(x, y, isInerted, radius, speedVectorDirection, speedVectorLength) {
     super(x, y, isInerted, radius, speedVectorDirection, speedVectorLength)
     this.wantedAngleToL = 0 //угол, который хотим поддерживать с вектором L
     this.numOfPoint = 0 //в какуй именно радиус стремиться
   }
-
-
   calculateNextPoint(PursuiterCoordinates, PursuiterSpeedVector, PursuiterRadius) {
     //вектор, направленный от преследующего к убегающему
     var Lvector = [
@@ -113,13 +110,11 @@ class Evader extends Player {
       this.numOfPoint = 0
       this.wantedPoint = [this.currentCoordinates[0] + this.speedVector[0], this.currentCoordinates[1] + this.speedVector[1]]
     }
-
     //средняя дистанция
     else if ((modOfVector(Lvector) > (PursuiterRadius / 2) && modOfVector(Lvector) <= 10 / PursuiterRadius)) {
       this.numOfPoint = 0
       this.wantedPoint = [this.currentCoordinates[0] + Lvector[0], this.currentCoordinates[1] + Lvector[1]]
     }
-
     //если находимся близко
     else if (modOfVector(Lvector) <= (PursuiterRadius / 2)) {
       //вектора от преследователя до цетров
@@ -129,12 +124,14 @@ class Evader extends Player {
       var radPoint1 = [PursuiterCoordinates[0] + buffVector1[0], PursuiterCoordinates[1] + buffVector1[1] * 1.8]
       var radPoint2 = [PursuiterCoordinates[0] + buffVector2[0], PursuiterCoordinates[1] + buffVector2[1] * 1.8]
 
-      var toRad1 = modOfVector([radPoint1[0] - this.currentCoordinates[0],
-      radPoint1[1] - this.currentCoordinates[1]
+      var toRad1 = modOfVector([
+        radPoint1[0] - this.currentCoordinates[0],
+        radPoint1[1] - this.currentCoordinates[1]
       ])
 
-      var toRad2 = modOfVector([radPoint2[0] - this.currentCoordinates[0],
-      radPoint2[1] - this.currentCoordinates[1]
+      var toRad2 = modOfVector([
+        radPoint2[0] - this.currentCoordinates[0],
+        radPoint2[1] - this.currentCoordinates[1]
       ])
 
       if ((toRad2 > toRad1) && this.numOfPoint == 0) {
@@ -142,7 +139,6 @@ class Evader extends Player {
       } else if ((toRad2 < toRad1) && this.numOfPoint == 0) {
         this.numOfPoint = 2
       }
-
       if (this.numOfPoint == 1) {
         this.wantedPoint = radPoint1
       } else if (this.numOfPoint == 2) {
@@ -165,7 +161,6 @@ class Game {
   }
 
   rebootData() {
-
     this.e_player.resetToStartPoint()
     this.p_player.resetToStartPoint()
 
@@ -284,7 +279,6 @@ class Game {
         })
       }
 
-
       this.makeNextStep()
 
       this.gameData["min_X"] =
@@ -298,7 +292,6 @@ class Game {
         Math.max(this.e_player.currentCoordinates[1], this.p_player.currentCoordinates[1], this.gameData["max_Y"])
 
       this.gameData["endTime"] = (i + 1) / 100
-
 
       if (this.checkIsSolved()) {
         this.gameData["pursuiterCoordinates"].push({
@@ -406,9 +399,7 @@ class Game {
           var lVector = []
           lVector[0] = this.e_player.startCoordinates[0] - this.p_player.startCoordinates[0]
           lVector[1] = this.e_player.startCoordinates[1] - this.p_player.startCoordinates[1]
-
           pDir = radToDeg(findCorrectAngle(lVector))
-
           this.p_player.startSpeedVector = createVector(pDir, modOfVector(this.p_player.startSpeedVector))
         }
         break

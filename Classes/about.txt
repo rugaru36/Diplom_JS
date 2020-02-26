@@ -1,0 +1,25 @@
+Player (родительский класс игрока)
+
+constructor(x, y, isInerted, radius, speedVectorDirection, speedVectorLength)
+moveToWantedPoint(stepSize) - двигаемся к вычесленной точке wantedPoint
+resetToStartPoint() - вернуть текущие координаты на старт
+
+Pursuiter (класс преследователя):
+
+constructor(x, y, radius, speedVectorDirection, speedVectorLength)
+calculateNextPoint(escaperCoordinates, h) - расчёт сл точки
+
+Escaper (класс убегающего):
+
+constructor(x, y, isInerted, radius, speedVectorDirection, speedVectorLength)
+calculateNextPoint(PursuiterCoordinates, PursuiterSpeedVector, PursuiterRadius) - расчёт сл точки
+
+GameInterface (класс игры):
+
+constructor(inputStepSize, inputAccuracy, inputTime)
+nextStep() - сл шаг, запускает процесс решения на текущей итерации
+checkIsSolved() возвращает true, если игра закончена в член класса записывает, кто победил
+startGameProcess() - итерационный процесс
+updateData(e) - обновление данных из инпутов
+rebootData() - перезагрузить данные перед запуском
+createPlayers() - первичное создание игроков

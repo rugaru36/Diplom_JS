@@ -3,49 +3,53 @@
 
 <head>
     <title>Диплом</title>
-    <link rel="shortcut icon" href="icon.png" type="image/png">
+    <link rel="shortcut icon" href="Resources/Img/icon.png" type="image/png">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="stylesheet" href="myStyle.css">
-    <script src="d3js.min.js"></script>
-    <script src="jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="funcs.js"></script>
-    <script type="text/javascript" src="classes.js"></script>
+    <link rel="stylesheet" href="Resources/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="Resources/CSS/myStyle.css">
+    <script src="Resources/JS/d3js.min.js"></script>
+    <script src="Resources/JS/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="Utils.js"></script>
+    <script type="text/javascript" src="Classes/Vector.js"></script>
+    <script type="text/javascript" src="Classes/Player.js"></script>
+    <script type="text/javascript" src="Classes/Pursuiter.js"></script>
+    <script type="text/javascript" src="Classes/Evader.js"></script>
+    <script type="text/javascript" src="Classes/Game.js"></script>
     <script type="text/javascript" src="mainProcess.js"></script>
     <script type="text/javascript" src="interfaceScripts.js"></script>
     <!--
 
-            В этой версии:
+      В этой версии:
 
-            -графика
-            -форма ввода
-            -стратегия преследования
-            -безынерционные объекты
-            -стратегия убегающего
-            -инерция преследующего
-            -пропорциональный график
-            -система задания векторов (угол и длина вектора вместо координат)
-            -скорость отрисовки
-            -вывод контрольных точек
-            -толщина линий
-            -реулируемая скорость отрисовки
-            -если попал в окружность - игра закончена
+      -графика
+      -форма ввода
+      -стратегия преследования
+      -безынерционные объекты
+      -стратегия убегающего
+      -инерция преследующего
+      -пропорциональный график
+      -система задания векторов (угол и длина вектора вместо координат)
+      -скорость отрисовки
+      -вывод контрольных точек
+      -толщина линий
+      -реулируемая скорость отрисовки
+      -если попал в окружность - игра закончена
 
-            -оптимизирован массив преследуемого
-            -оптимизирован интерфейс
-            -введён тестовый режим
+      -оптимизирован массив преследуемого
+      -оптимизирован интерфейс
+      -введён тестовый режим
 
-            -запилена проверка при прямом вводе
-            -проверка на пустые поля
+      -запилена проверка при прямом вводе
+      -проверка на пустые поля
 
-            -чекбокс для тестового режима
+      -чекбокс для тестового режима
 
-            -вычищено говно из кода
+      -вычищено говно из кода
 
-            -объекты больше не содержат массивы ВСЕХ точек, только текущие
+      -объекты больше не содержат массивы ВСЕХ точек, только текущие
 
-            -добавлены наследуемость и класс GameClass
-            
+      -добавлены наследуемость и класс GameClass
+      
     -->
 
 </head>
