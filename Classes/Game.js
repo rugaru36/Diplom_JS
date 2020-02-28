@@ -22,21 +22,16 @@ class Game {
     ]})
 
     this.gameData = []
-
     this.gameData.whoWon = "N"
     this.gameData.endTime = 0
-
     this.gameData.escaperCoordinates = []
     this.gameData.pursuiterCoordinates = []
-
     this.gameData.alphaAngles = []
     this.gameData.distance = []
-
     this.gameData.min_X = this.e_player.currentCoordinates[0]
     this.gameData.max_X = this.e_player.currentCoordinates[0]
     this.gameData.min_Y = this.e_player.currentCoordinates[1]
     this.gameData.max_Y = this.e_player.currentCoordinates[1]
-
     this.dataToDrawGraphics = []
     this.dataToDrawGraphics.Escaper = []
     this.dataToDrawGraphics.Pursuiter = []
@@ -49,10 +44,8 @@ class Game {
       return true
     }
     //векторы к центрам
-
     let buffVector1 = new Vector({direction: this.p_player.speedVector.direction + 90, length: this.p_player.radius})
     let buffVector2 = new Vector({direction: this.p_player.speedVector.direction - 90, length: this.p_player.radius})
-    
     //центры
     let radCenter1 = [
       this.p_player.currentCoordinates[0] + buffVector1.coordinates[0], 
@@ -62,7 +55,6 @@ class Game {
       this.p_player.currentCoordinates[0] + buffVector2.coordinates[0], 
       this.p_player.currentCoordinates[1] + buffVector2.coordinates[1]
     ]
-
     //вектор от убегающего к центру
     let vectorToFirstRadPoint = new Vector({coordinates: [
       radCenter1[0] - this.e_player.currentCoordinates[0], 
@@ -72,10 +64,8 @@ class Game {
       radCenter2[0] - this.e_player.currentCoordinates[0], 
       radCenter2[1] - this.e_player.currentCoordinates[1]
     ]})
-
     let isInFirstRad = vectorToFirstRadPoint.length < this.p_player.radius * 0.8
     let isInSeconsRad = vectorToSecondRadPoint.length < this.p_player.radius * 0.8
-
     if (isInFirstRad || isInSeconsRad) {
       this.gameData["whoWon"] = "E"
       return true
@@ -98,7 +88,6 @@ class Game {
       +document.getElementById('pursuiterRadius').value,
       +pDirection,
       +document.getElementById("pursuiterVectorLength").value)
-
     this.e_player = new Evader(
       +document.getElementById("Xe").value,
       +document.getElementById("Ye").value,
@@ -144,7 +133,6 @@ class Game {
       this.gameData["max_X"] = Math.max(this.e_player.currentCoordinates[0], this.p_player.currentCoordinates[0], this.gameData["max_X"])
       this.gameData["min_Y"] = Math.min(this.e_player.currentCoordinates[1], this.p_player.currentCoordinates[1], this.gameData["min_Y"])
       this.gameData["max_Y"] = Math.max(this.e_player.currentCoordinates[1], this.p_player.currentCoordinates[1], this.gameData["max_Y"])
-
       this.gameData["endTime"] = (i + 1) / 100
 
       if (this.checkIsSolved()) {

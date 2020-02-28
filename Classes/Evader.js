@@ -36,15 +36,15 @@ class Evader extends Player {
       let buffVector1 = new Vector({direction: PursuiterSpeedVector.direction + 90, length: PursuiterRadius})
       let buffVector2 = new Vector({direction: PursuiterSpeedVector.direction - 90, length: PursuiterRadius})
 
-      var radPoint1 = [PursuiterCoordinates[0] + buffVector1.coordinates[0], PursuiterCoordinates[1] + buffVector1.coordinates[1] * 1.8]
-      var radPoint2 = [PursuiterCoordinates[0] + buffVector2.coordinates[0], PursuiterCoordinates[1] + buffVector2.coordinates[1] * 1.8]
+      let radPoint1 = [PursuiterCoordinates[0] + buffVector1.coordinates[0], PursuiterCoordinates[1] + buffVector1.coordinates[1] * 1.8]
+      let radPoint2 = [PursuiterCoordinates[0] + buffVector2.coordinates[0], PursuiterCoordinates[1] + buffVector2.coordinates[1] * 1.8]
 
-      var toRad1 = new Vector({coordinates: [
+      let toRad1 = new Vector({coordinates: [
         radPoint1[0] - this.currentCoordinates[0],
         radPoint1[1] - this.currentCoordinates[1]
       ]}).length
 
-      var toRad2 = new Vector({coordinates: [
+      let toRad2 = new Vector({coordinates: [
         radPoint2[0] - this.currentCoordinates[0],
         radPoint2[1] - this.currentCoordinates[1]
       ]}).length
